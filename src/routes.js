@@ -1,4 +1,5 @@
 const {
+  getUsers,
   register,
   login,
   getProfile,
@@ -12,6 +13,11 @@ const {
 } = require('./handler');
 
 const routes = [
+  {
+    method: 'GET',
+    path: '/users',
+    handler: getUsers,
+  },
   {
     method: 'POST',
     path: '/register',

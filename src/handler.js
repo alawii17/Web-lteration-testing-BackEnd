@@ -6,6 +6,46 @@
 let bcrypt = require('bcrypt');
 const pool = require('./db');
 
+const getUsers = async (request, h) => {
+  const { id, username, email } = request.query;
+  try {
+    const client = await pool.connect();
+
+    let query = 'SELECT id, username, email FROM users';
+    let queryParams = [];
+    let conditions = [];
+
+    if (id) {
+      conditions.push(`id = $${queryParams.length + 1}`);
+      queryParams.push(id);
+    }
+    if (username) {
+      conditions.push(`username = $${queryParams.length + 1}`);
+      queryParams.push(username);
+    }
+    if (email) {
+      conditions.push(`email = $${queryParams.length + 1}`);
+      queryParams.push(email);
+    }
+
+    if (conditions.length > 0) {
+      query += ` WHERE ${conditions.join(' OR ')}`;
+    }
+
+    const result = await client.query(query, queryParams);
+    client.release();
+
+    if (result.rows.length === 0) {
+      return h.response({ error: 'Tidak ada user' }).code(404);
+    }
+
+    return h.response(result.rows).code(200);
+  } catch (error) {
+    console.error('Gagal memuat user:', error);
+    return h.response({ error: 'Gagal mengambil data user' }).code(500);
+  }
+};
+
 const register = async (request, h) => {
   const { username, email, password } = request.payload;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -220,5 +260,15 @@ const deleteDiscussion = async (request, h) => {
 };
 
 module.exports = {
-  register, login, getProfile, updateProfile, getQuestions, getDiscussions, addDiscussion, getReplies, addReply, deleteDiscussion,
+  getUsers,
+  register,
+  login,
+  getProfile,
+  updateProfile,
+  getQuestions,
+  getDiscussions,
+  addDiscussion,
+  getReplies,
+  addReply,
+  deleteDiscussion,
 };
