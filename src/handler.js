@@ -3,8 +3,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable max-len */
 /* eslint-disable no-plusplus */
-const bcrypt = require('bcrypt');
-const { parse } = require('@hapi/subtext');
+let bcrypt = require('bcrypt');
 const pool = require('./db');
 
 const register = async (request, h) => {
