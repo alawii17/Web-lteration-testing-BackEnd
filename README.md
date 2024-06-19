@@ -17,7 +17,7 @@ composer update
 npm install
 ```
 
-5. Jalankan perintah untuk menjalankan Project
+4. Jalankan perintah untuk menjalankan Project
 ```sh
 npm run start
 ```
