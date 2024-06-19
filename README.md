@@ -4,7 +4,7 @@ LITERATION TESTING merupakan sebuah aplikasi berbasis web yang bertujuan untuk m
 # Instalation
 1. Clone repository 
 ```sh
-https://github.com/alawii17/Web-Literation-Testing.git
+https://github.com/alawii17/Web-lteration-testing-BackEnd.git
 ```
 
 2. Jalankan Composer Update di terminal
